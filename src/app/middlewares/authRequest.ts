@@ -2,10 +2,10 @@ import { NextFunction, Request, Response } from 'express';
 import catchAsync from '../utils/catchAsync';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from '../config';
-import { TUserRole } from '../modules/user/user.interface';
-import { UserModel } from '../modules/user/user.model';
 import throwAppError from '../utils/throwAppError';
 import { StatusCodes } from 'http-status-codes';
+import { TUserRole } from '../module/user/user.interface';
+import { UserModel } from '../module/user/user.model';
 
 export const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
