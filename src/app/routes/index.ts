@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { HomeRoutes } from '../module/Home/Home.route';
+import { ExperienceRoute } from '../module/Experience/experience.route';
 
 const router = Router();
 
 const routeModules = [
   {
-    path: '/auth',
-    route: HomeRoutes,
+    path: '/experiences',
+    route: ExperienceRoute,
   },
 ];
 
