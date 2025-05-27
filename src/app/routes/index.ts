@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { ExperienceRoute } from '../module/Experience/experience.route';
+import { PersonalProjectRoute } from '../module/Personal Project/personalProject.route';
 
 const router = Router();
 
@@ -7,6 +8,10 @@ const routeModules = [
   {
     path: '/experiences',
     route: ExperienceRoute,
+  },
+  {
+    path: '/projects',
+    route: PersonalProjectRoute,
   },
 ];
 
