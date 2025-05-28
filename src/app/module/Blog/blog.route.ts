@@ -19,4 +19,6 @@ router.post(
 
 router.get('/', BlogController.getAllBlogs);
 
+router.get('/:blogId', BlogController.getABlogs);
+
 export const BlogRoutes = router;
