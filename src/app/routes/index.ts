@@ -1,17 +1,22 @@
 import { Router } from 'express';
-import { ExperienceRoute } from '../module/Experience/experience.route';
-import { PersonalProjectRoute } from '../module/Personal Project/personalProject.route';
+import { ExperienceRoutes } from '../module/Experience/experience.route';
+import { PersonalProjectRoutes } from '../module/Personal Project/personalProject.route';
+import { BlogRoutes } from '../module/Blog/blog.route';
 
 const router = Router();
 
 const routeModules = [
   {
     path: '/experiences',
-    route: ExperienceRoute,
+    route: ExperienceRoutes,
   },
   {
     path: '/projects',
-    route: PersonalProjectRoute,
+    route: PersonalProjectRoutes,
+  },
+  {
+    path: '/blogs',
+    route: BlogRoutes,
   },
 ];
 

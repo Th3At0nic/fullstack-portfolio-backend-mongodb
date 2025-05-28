@@ -15,4 +15,4 @@ router.get('/', ExperienceController.getAllExperiences);
 
 
 
-export const ExperienceRoute = router;
+export const ExperienceRoutes = router;
