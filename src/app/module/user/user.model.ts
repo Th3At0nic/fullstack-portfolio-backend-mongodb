@@ -3,15 +3,20 @@ import { IUser, TUser } from './user.interface';
 import bcrypt from 'bcrypt';
 import config from '../../config';
 
-export const userSchema = new Schema<TUser>(
+const userSchema = new Schema<TUser>(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true, select: 0 },
-    role: { type: String, enum: ['admin', 'user'], required: true },
-    deactivated: { type: Boolean, default: false },
+    password: { type: String, required: true }, // hashed password
+    bio: { type: [String], default: [] },
+    role: { type: String, enum: ['admin'], default: 'admin' },
+    avatarUrl: { type: String, required: true },
+    location: { type: String, required: true },
+    description: { type: String, required: true },
   },
-  { timestamps: true },
+  {
+    timestamps: true, // createdAt, updatedAt
+  },
 );
 
 //creating or using mongoose middleware like pre and post

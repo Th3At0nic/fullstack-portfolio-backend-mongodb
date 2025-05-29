@@ -1,31 +1,51 @@
 import { UserModel } from './user.model';
-import { TUser } from './user.interface';
+import { TLoginUser, TUser } from './user.interface';
 import throwAppError from '../../utils/throwAppError';
 import { StatusCodes } from 'http-status-codes';
-import { USER_ROLE } from './user.constant';
+import config from '../../config';
+import { generateToken } from './user.utils';
+import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
 
-const registerUserIntoDB = async (payload: TUser) => {
-  const user: TUser = {
-    name: payload.name,
-    email: payload.email,
-    password: payload.password,
-    role: USER_ROLE.user,
-    deactivated: false,
-  };
-
+const registerUserIntoDB = async (
+  file: Express.Multer.File,
+  payload: TUser,
+) => {
   //preventing duplicate creation of student
-  const userExisted = await UserModel.isUserExists(user.email as string);
+  const userExisted = await UserModel.isUserExists(payload.email as string);
 
   if (userExisted) {
     throwAppError(
       'email',
-      `The user id: ${user.email} is already registered.`,
+      `The user id: ${payload.email} is already registered.`,
       StatusCodes.CONFLICT,
     );
   }
 
+  if (file) {
+    const imgName = `${payload.email}-${Date.now()}`;
+    // const imgPath = file.path;
+
+    const uploadImgResult = await sendImageToCloudinary(file.buffer, imgName);
+    if (uploadImgResult?.secure_url) {
+      payload.avatarUrl = uploadImgResult.secure_url;
+    } else {
+      payload.avatarUrl = '';
+      throwAppError(
+        'cloudinary',
+        'Cloudinary Upload failed and no image url returned',
+        StatusCodes.INTERNAL_SERVER_ERROR,
+      );
+    }
+  } else {
+    throwAppError(
+      'file',
+      'Profile Picture not attached. You must select an image',
+      StatusCodes.BAD_REQUEST,
+    );
+  }
+
   //creating a new user
-  const newUser = await UserModel.create(user);
+  const newUser = await UserModel.create(payload);
 
   if (!newUser) {
     throwAppError(
@@ -38,4 +58,62 @@ const registerUserIntoDB = async (payload: TUser) => {
   return newUser;
 };
 
-export const userServices = { registerUserIntoDB };
+const loginUserAuth = async (payload: TLoginUser) => {
+  const { email, password: userGivenPassword } = payload;
+
+  const user = await UserModel.isUserExists(email);
+
+  if (!user) {
+    throwAppError(
+      'email',
+      `This Email is not Registered.`,
+      StatusCodes.UNAUTHORIZED,
+    );
+  }
+
+  // if (user?.deactivated) {
+  //   throwAppError(
+  //     'deactivated',
+  //     'Your account is deactivated by admin. To login your account, contact admin to activate your account first',
+  //     StatusCodes.FORBIDDEN,
+  //   );
+  // }
+
+  const isPasswordValid = await UserModel.isPasswordCorrect(
+    userGivenPassword,
+    user?.password as string,
+  );
+
+  if (!isPasswordValid) {
+    throwAppError(
+      'password',
+      'The provided password is incorrect. Please try again.',
+      StatusCodes.UNAUTHORIZED,
+    );
+  }
+
+  const jwtPayload = {
+    userEmail: user?.email as string,
+    role: user?.role as string,
+  };
+
+  // create access token and send it to the client
+  const accessToken = generateToken(
+    jwtPayload,
+    config.jwt_access_secret as string,
+    config.jwt_access_expires_in as string,
+  );
+
+  const refreshToken = generateToken(
+    jwtPayload,
+    config.jwt_refresh_secret as string,
+    config.jwt_refresh_expires_in as string,
+  );
+
+  return {
+    accessToken,
+    refreshToken,
+  };
+};
+
+export const userService = { registerUserIntoDB, loginUserAuth };

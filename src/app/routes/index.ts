@@ -5,6 +5,7 @@ import { BlogRoutes } from '../module/Blog/blog.route';
 import { SkillRoutes } from '../module/Skill/skill.route';
 import { ResumeRoutes } from '../module/Resume/resume.route';
 import { CourseAndCertificateRoutes } from '../module/Course&Certification/course.route';
+import { userRoute } from '../module/user/user.route';
 
 const router = Router();
 
@@ -32,6 +33,10 @@ const routeModules = [
   {
     path: '/courses',
     route: CourseAndCertificateRoutes,
+  },
+  {
+    path: '/user',
+    route: userRoute,
   },
 ];
 
