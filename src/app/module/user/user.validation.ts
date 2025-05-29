@@ -22,3 +22,9 @@ export const userValidationSchema = z.object({
     description: z.string().min(1, 'Description is required'),
   }),
 });
+
+export const refreshTokenValidationSchema = z.object({
+  cookies: z.object({
+    refreshToken: z.string({ required_error: 'Refresh token is required!' }),
+  }),
+});
