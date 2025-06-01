@@ -18,7 +18,7 @@ const addSkillIntoDB = async (file: Express.Multer.File, payload: TSkill) => {
   }
 
   if (file) {
-    const imgName = `${payload.title}-${Date.now()}`;
+    const imgName = `skillIcon-${Date.now()}`;
     // const imgPath = file.path;
 
     const uploadImgResult = await sendImageToCloudinary(file.buffer, imgName);
