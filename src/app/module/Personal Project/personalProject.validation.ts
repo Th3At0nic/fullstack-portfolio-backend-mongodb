@@ -13,8 +13,15 @@ export const personalProjectValidationSchema = z.object({
     frontendRepo: z
       .string({ required_error: 'Frontend repo URL is required' })
       .url('Must be a valid URL'),
-    backendRepo: z.string().url('Must be a valid URL').optional(),
-    liveBackendUrl: z.string().url('Must be a valid URL').optional(),
+    backendRepo: z.preprocess(
+      (val) => (val === '' ? undefined : val),
+      z.string().url('Must be a valid URL').optional(),
+    ),
+    liveBackendUrl: z.preprocess(
+      (val) => (val === '' ? undefined : val),
+      z.string().url('Must be a valid URL').optional(),
+    ),
+
     deploymentPlatform: z.enum(
       ['Vercel', 'Netlify', 'Render', 'Railway', 'Other'],
       {
