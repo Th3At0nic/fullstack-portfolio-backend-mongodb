@@ -70,7 +70,10 @@ cloudinary.config({
 
 // Multer: store files in memory (RAM)
 const storage = multer.memoryStorage();
-export const upload = multer({ storage });
+export const upload = multer({
+  storage,
+  limits: { fileSize: 1 * 1024 * 1024 },
+});
 
 // Function to upload a buffer to Cloudinary
 export const sendImageToCloudinary = async (

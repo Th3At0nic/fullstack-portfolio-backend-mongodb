@@ -19,7 +19,7 @@ const createBlogIntoDB = async (file: Express.Multer.File, payload: TBlog) => {
   }
 
   if (file) {
-    const imgName = `${payload.title}-${Date.now()}`;
+    const imgName = `blogImg-${Date.now()}`;
     // const imgPath = file.path;
 
     const uploadImgResult = await sendImageToCloudinary(file.buffer, imgName);

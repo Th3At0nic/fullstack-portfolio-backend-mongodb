@@ -23,7 +23,7 @@ const registerUserIntoDB = async (
   }
 
   if (file) {
-    const imgName = `${payload.email}-${Date.now()}`;
+    const imgName = `portfolioDP-${Date.now()}`;
     // const imgPath = file.path;
 
     const uploadImgResult = await sendImageToCloudinary(file.buffer, imgName);

@@ -9,10 +9,11 @@ const createPersonalProjectIntoDB = async (
   payload: TPersonalProject,
 ) => {
   if (file) {
-    const imgName = `${payload.title}-${Date.now()}`;
+    const imgName = `projectImg-${Date.now()}`;
     // const imgPath = file.path;
 
     const uploadImgResult = await sendImageToCloudinary(file.buffer, imgName);
+
     if (uploadImgResult?.secure_url) {
       payload.thumbnail = uploadImgResult.secure_url;
     } else {

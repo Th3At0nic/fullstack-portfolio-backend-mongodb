@@ -10,11 +10,13 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: 'https://my-fullstack-portfolio-dashboard.vercel.app',
+    origin: [
+      'http://localhost:5173',
+      'https://my-fullstack-portfolio-dashboard.vercel.app',
+    ],
     credentials: true,
   }),
 );
-//http://localhost:5173
 
 app.use('/api', router);
 
