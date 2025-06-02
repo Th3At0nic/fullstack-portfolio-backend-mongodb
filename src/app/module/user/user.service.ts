@@ -170,8 +170,22 @@ const createNewAccessTokenByRefreshToken = async (token: string) => {
   } else return null;
 };
 
+const getMyDataFromDB = async () => {
+  const result = await UserModel.find();
+  if (!result.length) {
+    throwAppError(
+      'user',
+      'No User Data Found at this moment',
+      StatusCodes.NOT_FOUND,
+    );
+  }
+
+  return result;
+};
+
 export const userService = {
   registerUserIntoDB,
   loginUserAuth,
   createNewAccessTokenByRefreshToken,
+  getMyDataFromDB,
 };
