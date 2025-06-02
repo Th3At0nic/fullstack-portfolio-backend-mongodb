@@ -7,7 +7,7 @@ const userSchema = new Schema<TUser>(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }, // hashed password
+    password: { type: String, required: true, select: false }, // hashed password
     bio: { type: [String], default: [] },
     role: { type: String, enum: ['admin'], default: 'admin' },
     avatarUrl: { type: String, required: true },

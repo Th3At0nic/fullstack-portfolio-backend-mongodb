@@ -41,8 +41,15 @@ const createNewAccessTokenByRefreshToken = catchAsync(
   },
 );
 
+const getMyData = catchAsync(async (req, res, next) => {
+  const result = await userService.getMyDataFromDB();
+  const message = 'Your Profile Data Retrieved Successfully';
+  sendResponse(res, StatusCodes.OK, true, message, result);
+});
+
 export const userControllers = {
   registerUser,
   loginUser,
   createNewAccessTokenByRefreshToken,
+  getMyData,
 };

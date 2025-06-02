@@ -10,6 +10,8 @@ import { upload } from '../../utils/sendImageToCloudinary';
 
 const router = express.Router();
 
+router.get('/profile-data', userControllers.getMyData);
+
 router.post(
   '/register',
   upload.single('file'),
