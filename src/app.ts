@@ -13,7 +13,8 @@ app.use(
     origin: [
       'http://localhost:5173',
       'http://localhost:5174',
-      'https://my-fullstack-portfolio-dashboard.vercel.app',
+      // 'https://my-fullstack-portfolio-dashboard.vercel.app',
+      // 'https://my-fullstack-portfolio-frontend.vercel.app',
     ],
     credentials: true,
   }),
