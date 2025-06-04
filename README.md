@@ -2,7 +2,7 @@
 
 This is the **backend API** for my personal portfolio dashboard. It powers blog management, project tracking, experience records, skillsets, resume uploads, and more. Built with **Node.js**, **Express**, and **MongoDB**, this backend handles all the core data operations and exposes secure endpoints for frontend consumption.
 
-🔗 **Live Backend URL**: [https://portfolio-backend-th3at0nic.vercel.app](https://portfolio-backend-th3at0nic.vercel.app)
+🔗 **Live Backend URL**: [https://my-fullstack-portfolio-backend-lake.vercel.app](https://my-fullstack-portfolio-backend-lake.vercel.app)
 
 ---
 
