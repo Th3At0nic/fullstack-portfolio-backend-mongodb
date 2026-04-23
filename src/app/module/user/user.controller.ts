@@ -47,9 +47,17 @@ const getMyData = catchAsync(async (req, res, next) => {
   sendResponse(res, StatusCodes.OK, true, message, result);
 });
 
+const updateMyProfileData = catchAsync(async (req, res, next) => {
+  console.log('req body is her:::', req ? req : 'nothing');
+  const result = await userService.updateMyProfileDataIntoDB(req.body);
+  const message = 'Your Profile Data Updated Successfully';
+  sendResponse(res, StatusCodes.OK, true, message, result);
+});
+
 export const userControllers = {
   registerUser,
   loginUser,
   createNewAccessTokenByRefreshToken,
   getMyData,
+  updateMyProfileData,
 };
