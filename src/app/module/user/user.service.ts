@@ -183,8 +183,35 @@ const getMyDataFromDB = async () => {
   return result;
 };
 
-const updateMyProfileDataIntoDB = async (payload: Partial<TUser>) => {
+const updateMyProfileDataIntoDB = async (
+  file: Express.Multer.File,
+  payload: Partial<TUser>,
+) => {
   console.log('here is payload in service', payload);
+
+  if (file) {
+    const imgName = `portfolioDP-${Date.now()}`;
+    // const imgPath = file.path;
+
+    const uploadImgResult = await sendImageToCloudinary(file.buffer, imgName);
+    if (uploadImgResult?.secure_url) {
+      payload.avatarUrl = uploadImgResult.secure_url;
+    } else {
+      payload.avatarUrl = '';
+      throwAppError(
+        'cloudinary',
+        'Cloudinary Upload failed and no image url returned',
+        StatusCodes.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+  //  else {
+  //   throwAppError(
+  //     'file',
+  //     'Profile Picture not attached. You must select an image',
+  //     StatusCodes.BAD_REQUEST,
+  //   );
+  // }
   // const result = await UserModel.findOneAndUpdate(
   //   { email: payload.email },
   //   { $set: payload }, // Explicitly tell Mongoose to only update these fields
