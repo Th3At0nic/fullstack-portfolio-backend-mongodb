@@ -49,9 +49,10 @@ const getMyData = catchAsync(async (req, res, next) => {
 });
 
 const updateMyProfileData = catchAsync(async (req, res, next) => {
+  const file = req?.file as Express.Multer.File;
   const { userEmail } = req.user as JwtPayload;
   req.body.email = userEmail;
-  const result = await userService.updateMyProfileDataIntoDB(req.body);
+  const result = await userService.updateMyProfileDataIntoDB(file, req.body);
   const message = 'Your Profile Data Updated Successfully';
   sendResponse(res, StatusCodes.OK, true, message, result);
 });

@@ -41,6 +41,11 @@ router.post(
 router.patch(
   '/update-profile',
   auth(USER_ROLE.admin),
+  upload.single('file'),
+  (req: Request, res: Response, next: NextFunction) => {
+    req.body = JSON.parse(req.body.data);
+    next();
+  },
   validateRequest(updateUserValidationSchema),
   userControllers.updateMyProfileData,
 );

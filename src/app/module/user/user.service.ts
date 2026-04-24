@@ -187,8 +187,6 @@ const updateMyProfileDataIntoDB = async (
   file: Express.Multer.File,
   payload: Partial<TUser>,
 ) => {
-  console.log('here is payload in service', payload);
-
   if (file) {
     const imgName = `portfolioDP-${Date.now()}`;
     // const imgPath = file.path;
@@ -197,7 +195,6 @@ const updateMyProfileDataIntoDB = async (
     if (uploadImgResult?.secure_url) {
       payload.avatarUrl = uploadImgResult.secure_url;
     } else {
-      payload.avatarUrl = '';
       throwAppError(
         'cloudinary',
         'Cloudinary Upload failed and no image url returned',
@@ -205,6 +202,8 @@ const updateMyProfileDataIntoDB = async (
       );
     }
   }
+
+  console.log('here is the pyaload after uplaoding img: ', payload);
   //  else {
   //   throwAppError(
   //     'file',
