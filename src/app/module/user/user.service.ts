@@ -184,19 +184,20 @@ const getMyDataFromDB = async () => {
 };
 
 const updateMyProfileDataIntoDB = async (payload: Partial<TUser>) => {
-  const result = await UserModel.findOneAndUpdate(
-    { email: payload.email },
-    { $set: payload }, // Explicitly tell Mongoose to only update these fields
-    { new: true, runValidators: true }, // runValidators ensures the update follows your Schema rules
-  );
-  if (!result) {
-    throwAppError(
-      'user',
-      'Failed to update user profile. Please try again later.',
-      StatusCodes.INTERNAL_SERVER_ERROR,
-    );
-  }
-  return result;
+  console.log('here is payload in service', payload);
+  // const result = await UserModel.findOneAndUpdate(
+  //   { email: payload.email },
+  //   { $set: payload }, // Explicitly tell Mongoose to only update these fields
+  //   { new: true, runValidators: true }, // runValidators ensures the update follows your Schema rules
+  // );
+  // if (!result) {
+  //   throwAppError(
+  //     'user',
+  //     'Failed to update user profile. Please try again later.',
+  //     StatusCodes.INTERNAL_SERVER_ERROR,
+  //   );
+  // }
+  // return result;
 };
 
 export const userService = {

@@ -4,6 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { userService } from './user.service';
+import { JwtPayload } from 'jsonwebtoken';
 
 //imported HOF(catchAsync()) to pass the async func there to handle the promise and error, reduced boilerplates
 
@@ -48,7 +49,8 @@ const getMyData = catchAsync(async (req, res, next) => {
 });
 
 const updateMyProfileData = catchAsync(async (req, res, next) => {
-  console.log('req body is her:::', req ? req : 'nothing');
+  const { userEmail } = req.user as JwtPayload;
+  req.body.email = userEmail;
   const result = await userService.updateMyProfileDataIntoDB(req.body);
   const message = 'Your Profile Data Updated Successfully';
   sendResponse(res, StatusCodes.OK, true, message, result);

@@ -23,6 +23,15 @@ export const userValidationSchema = z.object({
   }),
 });
 
+export const updateUserValidationSchema = z.object({
+  body: z.object({
+    name: z.string().min(1, 'Name is required').optional(),
+    bio: z.array(z.string()).optional(),
+    location: z.string().min(1, 'Location is required').optional(),
+    description: z.string().min(1, 'Description is required').optional(),
+  }),
+});
+
 export const refreshTokenValidationSchema = z.object({
   cookies: z.object({
     refreshToken: z.string({ required_error: 'Refresh token is required!' }),
