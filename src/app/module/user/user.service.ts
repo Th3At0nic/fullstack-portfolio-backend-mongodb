@@ -187,7 +187,9 @@ const updateMyProfileDataIntoDB = async (
   file: Express.Multer.File,
   payload: Partial<TUser>,
 ) => {
+  console.log('here is file::::', file);
   if (file) {
+    console.log('file is coming in srvice::');
     const imgName = `portfolioDP-${Date.now()}`;
     // const imgPath = file.path;
 
@@ -211,11 +213,11 @@ const updateMyProfileDataIntoDB = async (
   //   );
   // }
 
-  console.log('here is the pyaload after uplaoding img: ', payload);
-
   const { email, ...payloadWithoutEmail } = payload; //removing email from the payload because we don't want to update email field in the database. We only want to update name, bio, location and description fields in the database. So we are removing email field from the payload before updating the user profile data in the database.
 
   const cleanedPayload = cleanUpdatePayload(payloadWithoutEmail);
+
+  console.log('cleaned paylaod:::', cleanedPayload);
 
   const result = await UserModel.findOneAndUpdate(
     { email: payload.email },

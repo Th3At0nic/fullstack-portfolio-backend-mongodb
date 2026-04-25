@@ -50,6 +50,9 @@ const getMyData = catchAsync(async (req, res, next) => {
 
 const updateMyProfileData = catchAsync(async (req, res, next) => {
   const file = req?.file as Express.Multer.File;
+
+  console.log('file is in the controller;a;', file);
+
   const { userEmail } = req.user as JwtPayload;
   req.body.email = userEmail;
   const result = await userService.updateMyProfileDataIntoDB(file, req.body);
