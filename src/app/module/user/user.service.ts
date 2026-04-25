@@ -4,7 +4,7 @@ import { TLoginUser, TUser } from './user.interface';
 import throwAppError from '../../utils/throwAppError';
 import { StatusCodes } from 'http-status-codes';
 import config from '../../config';
-import { generateToken } from './user.utils';
+import { cleanUpdatePayload, generateToken } from './user.utils';
 import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
 
 const registerUserIntoDB = async (
@@ -203,7 +203,6 @@ const updateMyProfileDataIntoDB = async (
     }
   }
 
-  console.log('here is the pyaload after uplaoding img: ', payload);
   //  else {
   //   throwAppError(
   //     'file',
@@ -211,19 +210,24 @@ const updateMyProfileDataIntoDB = async (
   //     StatusCodes.BAD_REQUEST,
   //   );
   // }
-  // const result = await UserModel.findOneAndUpdate(
-  //   { email: payload.email },
-  //   { $set: payload }, // Explicitly tell Mongoose to only update these fields
-  //   { new: true, runValidators: true }, // runValidators ensures the update follows your Schema rules
-  // );
-  // if (!result) {
-  //   throwAppError(
-  //     'user',
-  //     'Failed to update user profile. Please try again later.',
-  //     StatusCodes.INTERNAL_SERVER_ERROR,
-  //   );
-  // }
-  // return result;
+
+  console.log('here is the pyaload after uplaoding img: ', payload);
+
+  const cleanedPayload = cleanUpdatePayload(payload);
+
+  const result = await UserModel.findOneAndUpdate(
+    { email: payload.email },
+    { $set: cleanedPayload }, // Explicitly tell Mongoose to only update these fields
+    { new: true, runValidators: true }, // runValidators ensures the update follows your Schema rules
+  );
+  if (!result) {
+    throwAppError(
+      'user',
+      'Failed to update user profile. Please try again later.',
+      StatusCodes.INTERNAL_SERVER_ERROR,
+    );
+  }
+  return result;
 };
 
 export const userService = {
