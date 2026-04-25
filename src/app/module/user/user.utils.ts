@@ -10,3 +10,18 @@ export const generateToken = (
 ) => {
   return jwt.sign(jwtPayload, secret, { expiresIn });
 };
+
+// this cleanUpdatePayload is used to remove undefined and empty string values from the update payload before updating the user profile data in the database. This ensures that only valid and non-empty fields are updated, preventing accidental overwriting of existing data with undefined or empty values.
+export function cleanUpdatePayload(payload: any) {
+  const cleaned: any = {};
+
+  for (const key in payload) {
+    const value = payload[key];
+
+    if (value !== undefined && value !== '') {
+      cleaned[key] = value;
+    }
+  }
+
+  return cleaned;
+}

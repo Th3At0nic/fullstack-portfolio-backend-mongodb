@@ -4,7 +4,7 @@ import { TLoginUser, TUser } from './user.interface';
 import throwAppError from '../../utils/throwAppError';
 import { StatusCodes } from 'http-status-codes';
 import config from '../../config';
-import { generateToken } from './user.utils';
+import { cleanUpdatePayload, generateToken } from './user.utils';
 import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
 
 const registerUserIntoDB = async (
@@ -145,15 +145,6 @@ const createNewAccessTokenByRefreshToken = async (token: string) => {
     );
   }
 
-  // const isUserDeactivated = user?.deactivated;
-  // if (isUserDeactivated) {
-  //   throwAppError(
-  //     'email',
-  //     `The account of ${role} with the provided email: ${userEmail} id deactivated. Please contact with admin to activate first`,
-  //     StatusCodes.NOT_FOUND,
-  //   );
-  // }
-
   if (user) {
     const jwtPayload = {
       userEmail: user.email,
@@ -203,27 +194,23 @@ const updateMyProfileDataIntoDB = async (
     }
   }
 
-  console.log('here is the pyaload after uplaoding img: ', payload);
-  //  else {
-  //   throwAppError(
-  //     'file',
-  //     'Profile Picture not attached. You must select an image',
-  //     StatusCodes.BAD_REQUEST,
-  //   );
-  // }
-  // const result = await UserModel.findOneAndUpdate(
-  //   { email: payload.email },
-  //   { $set: payload }, // Explicitly tell Mongoose to only update these fields
-  //   { new: true, runValidators: true }, // runValidators ensures the update follows your Schema rules
-  // );
-  // if (!result) {
-  //   throwAppError(
-  //     'user',
-  //     'Failed to update user profile. Please try again later.',
-  //     StatusCodes.INTERNAL_SERVER_ERROR,
-  //   );
-  // }
-  // return result;
+  const { email, ...payloadWithoutEmail } = payload; //removing email from the payload because we don't want to update email field in the database. We only want to update name, bio, location and description fields in the database. So we are removing email field from the payload before updating the user profile data in the database.
+
+  const cleanedPayload = cleanUpdatePayload(payloadWithoutEmail);
+
+  const result = await UserModel.findOneAndUpdate(
+    { email: payload.email },
+    { $set: cleanedPayload }, // Explicitly tell Mongoose to only update these fields
+    { new: true, runValidators: true }, // runValidators ensures the update follows your Schema rules
+  );
+  if (!result) {
+    throwAppError(
+      'user',
+      'Failed to update user profile. Please try again later.',
+      StatusCodes.INTERNAL_SERVER_ERROR,
+    );
+  }
+  return result;
 };
 
 export const userService = {

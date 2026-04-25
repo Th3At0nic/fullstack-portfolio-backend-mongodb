@@ -25,13 +25,10 @@ export const userValidationSchema = z.object({
 
 export const updateUserValidationSchema = z.object({
   body: z.object({
-    name: z.string().min(1, 'Name is required').optional(),
+    name: z.string().optional(),
     bio: z.array(z.string()).optional(),
-    location: z.string().min(1, 'Location is required').optional(),
-    description: z
-      .string()
-      .min(1, 'Personal Description is required')
-      .optional(),
+    location: z.string().optional(),
+    description: z.string().optional(),
   }),
 });
 
