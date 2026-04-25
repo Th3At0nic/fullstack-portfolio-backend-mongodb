@@ -203,14 +203,6 @@ const updateMyProfileDataIntoDB = async (
     }
   }
 
-  //  else {
-  //   throwAppError(
-  //     'file',
-  //     'Profile Picture not attached. You must select an image',
-  //     StatusCodes.BAD_REQUEST,
-  //   );
-  // }
-
   const { email, ...payloadWithoutEmail } = payload; //removing email from the payload because we don't want to update email field in the database. We only want to update name, bio, location and description fields in the database. So we are removing email field from the payload before updating the user profile data in the database.
 
   const cleanedPayload = cleanUpdatePayload(payloadWithoutEmail);
