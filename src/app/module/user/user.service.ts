@@ -187,9 +187,7 @@ const updateMyProfileDataIntoDB = async (
   file: Express.Multer.File,
   payload: Partial<TUser>,
 ) => {
-  console.log('here is file::::', file);
   if (file) {
-    console.log('file is coming in srvice::');
     const imgName = `portfolioDP-${Date.now()}`;
     // const imgPath = file.path;
 
