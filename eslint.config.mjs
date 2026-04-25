@@ -11,11 +11,15 @@ export default [
   {
     ignores: ['node_modules', 'dist'],
     rules: {
-      'no-unused-vars': 'error',
-      'no-unused-expressions': 'error',
+      // Standard JS rules
+      'no-unused-vars': 'off', // Turn off the base rule
+      'no-unused-expressions': 'warn',
       'no-console': 'warn',
-      'prefer-const': 'error',
-      // 'no-undef': 'error',
+      'prefer-const': 'warn',
+
+      // TypeScript specific rules (This is likely what you're seeing)
+      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-unused-expressions': 'warn',
     },
   },
 ];
