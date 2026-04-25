@@ -183,9 +183,53 @@ const getMyDataFromDB = async () => {
   return result;
 };
 
+const updateMyProfileDataIntoDB = async (
+  file: Express.Multer.File,
+  payload: Partial<TUser>,
+) => {
+  if (file) {
+    const imgName = `portfolioDP-${Date.now()}`;
+    // const imgPath = file.path;
+
+    const uploadImgResult = await sendImageToCloudinary(file.buffer, imgName);
+    if (uploadImgResult?.secure_url) {
+      payload.avatarUrl = uploadImgResult.secure_url;
+    } else {
+      throwAppError(
+        'cloudinary',
+        'Cloudinary Upload failed and no image url returned',
+        StatusCodes.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  console.log('here is the pyaload after uplaoding img: ', payload);
+  //  else {
+  //   throwAppError(
+  //     'file',
+  //     'Profile Picture not attached. You must select an image',
+  //     StatusCodes.BAD_REQUEST,
+  //   );
+  // }
+  // const result = await UserModel.findOneAndUpdate(
+  //   { email: payload.email },
+  //   { $set: payload }, // Explicitly tell Mongoose to only update these fields
+  //   { new: true, runValidators: true }, // runValidators ensures the update follows your Schema rules
+  // );
+  // if (!result) {
+  //   throwAppError(
+  //     'user',
+  //     'Failed to update user profile. Please try again later.',
+  //     StatusCodes.INTERNAL_SERVER_ERROR,
+  //   );
+  // }
+  // return result;
+};
+
 export const userService = {
   registerUserIntoDB,
   loginUserAuth,
   createNewAccessTokenByRefreshToken,
   getMyDataFromDB,
+  updateMyProfileDataIntoDB,
 };

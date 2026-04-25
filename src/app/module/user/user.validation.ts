@@ -19,7 +19,19 @@ export const userValidationSchema = z.object({
     bio: z.array(z.string()).optional(),
     role: z.literal('admin').optional(), // defaults to 'admin' if not provided
     location: z.string().min(1, 'Location is required'),
-    description: z.string().min(1, 'Description is required'),
+    description: z.string().min(1, 'Personal Description is required'),
+  }),
+});
+
+export const updateUserValidationSchema = z.object({
+  body: z.object({
+    name: z.string().min(1, 'Name is required').optional(),
+    bio: z.array(z.string()).optional(),
+    location: z.string().min(1, 'Location is required').optional(),
+    description: z
+      .string()
+      .min(1, 'Personal Description is required')
+      .optional(),
   }),
 });
 

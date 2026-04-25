@@ -5,8 +5,11 @@ import {
   refreshTokenValidationSchema,
   userLoginValidationSchema,
   userValidationSchema,
+  updateUserValidationSchema,
 } from './user.validation';
 import { upload } from '../../utils/sendImageToCloudinary';
+import { auth } from '../../middlewares/authRequest';
+import { USER_ROLE } from './user.constant';
 
 const router = express.Router();
 
@@ -33,6 +36,18 @@ router.post(
   '/refresh-token',
   validateRequest(refreshTokenValidationSchema),
   userControllers.createNewAccessTokenByRefreshToken,
+);
+
+router.patch(
+  '/update-profile',
+  auth(USER_ROLE.admin),
+  upload.single('file'),
+  (req: Request, res: Response, next: NextFunction) => {
+    req.body = JSON.parse(req.body.data);
+    next();
+  },
+  validateRequest(updateUserValidationSchema),
+  userControllers.updateMyProfileData,
 );
 
 export const userRoute = router;
