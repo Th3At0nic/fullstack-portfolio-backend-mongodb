@@ -145,15 +145,6 @@ const createNewAccessTokenByRefreshToken = async (token: string) => {
     );
   }
 
-  // const isUserDeactivated = user?.deactivated;
-  // if (isUserDeactivated) {
-  //   throwAppError(
-  //     'email',
-  //     `The account of ${role} with the provided email: ${userEmail} id deactivated. Please contact with admin to activate first`,
-  //     StatusCodes.NOT_FOUND,
-  //   );
-  // }
-
   if (user) {
     const jwtPayload = {
       userEmail: user.email,
