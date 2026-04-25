@@ -215,8 +215,6 @@ const updateMyProfileDataIntoDB = async (
 
   const cleanedPayload = cleanUpdatePayload(payloadWithoutEmail);
 
-  console.log('cleaned paylaod:::', cleanedPayload);
-
   const result = await UserModel.findOneAndUpdate(
     { email: payload.email },
     { $set: cleanedPayload }, // Explicitly tell Mongoose to only update these fields
