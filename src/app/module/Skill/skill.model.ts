@@ -6,15 +6,6 @@ const skillSchema = new Schema<TSkill>(
     title: { type: String, required: true, unique: true },
     category: {
       type: String,
-      enum: [
-        'Language',
-        'Framework',
-        'Library',
-        'Tool',
-        'Database',
-        'Platform',
-        'Other',
-      ],
       required: true,
     },
     description: { type: String, required: true },
