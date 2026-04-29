@@ -15,20 +15,5 @@ export const skillValidationSchema = z.object({
     category: z.string({
       required_error: 'Category is required',
     }),
-    // category: z.enum(
-    //   [
-    //     'Language',
-    //     'Framework',
-    //     'Library',
-    //     'Tool',
-    //     'Database',
-    //     'Platform',
-    //     'Other',
-    //   ],
-    //   {
-    //     required_error: 'Skill category is required',
-    //     invalid_type_error: 'Invalid skill category',
-    //   },
-    // ),
   }),
 });
