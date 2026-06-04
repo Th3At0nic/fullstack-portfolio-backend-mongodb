@@ -15,6 +15,7 @@ app.use(
       'http://localhost:5174',
       'https://my-fullstack-portfolio-frontend.vercel.app',
       'https://my-fullstack-portfolio-dashboard.vercel.app',
+      'https://rahatul.vercel.app/',
     ],
     credentials: true,
   }),
