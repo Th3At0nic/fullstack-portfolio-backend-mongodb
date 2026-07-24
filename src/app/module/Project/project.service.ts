@@ -1,12 +1,12 @@
 import { StatusCodes } from 'http-status-codes';
 import throwAppError from '../../utils/throwAppError';
-// import { TProject } from './project.interface';
-// import { ProjectModel } from './project.model';
+import { TProject } from './project.interface';
+import { ProjectModel } from './project.model';
 import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
 
-// const createProjectIntoDB = async (
+const createProjectIntoDB = async (
   file: Express.Multer.File,
-  // payload: TProject,
+  payload: TProject,
 ) => {
   if (file) {
     const imgName = `projectImg-${Date.now()}`;
@@ -32,7 +32,7 @@ import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
     );
   }
 
-  // const result = await ProjectModel.create(payload);
+  const result = await ProjectModel.create(payload);
 
   if (!result) {
     throwAppError(
@@ -45,8 +45,8 @@ import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
   return result;
 };
 
-// const getAllProjectsFromDB = async () => {
-//   const result = await ProjectModel.find();
+const getAllProjectsFromDB = async () => {
+  const result = await ProjectModel.find();
 
   if (!result.length) {
     throwAppError(
@@ -59,7 +59,7 @@ import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
   return result;
 };
 
-// export const ProjectService = {
-//   createProjectIntoDB,
-//   getAllProjectsFromDB,
+export const ProjectService = {
+  createProjectIntoDB,
+  getAllProjectsFromDB,
 };
