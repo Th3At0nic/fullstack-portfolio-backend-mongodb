@@ -1,12 +1,12 @@
 import { StatusCodes } from 'http-status-codes';
 import throwAppError from '../../utils/throwAppError';
-import { TPersonalProject } from './personalProject.interface';
-import { PersonalProjectModel } from './personalProject.model';
+import { TProject } from './project.interface';
+import { ProjectModel } from './project.model';
 import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
 
-const createPersonalProjectIntoDB = async (
+const createProjectIntoDB = async (
   file: Express.Multer.File,
-  payload: TPersonalProject,
+  payload: TProject,
 ) => {
   if (file) {
     const imgName = `projectImg-${Date.now()}`;
@@ -32,7 +32,7 @@ const createPersonalProjectIntoDB = async (
     );
   }
 
-  const result = await PersonalProjectModel.create(payload);
+  const result = await ProjectModel.create(payload);
 
   if (!result) {
     throwAppError(
@@ -45,8 +45,8 @@ const createPersonalProjectIntoDB = async (
   return result;
 };
 
-const getAllPersonalProjectsFromDB = async () => {
-  const result = await PersonalProjectModel.find();
+const getAllProjectsFromDB = async () => {
+  const result = await ProjectModel.find();
 
   if (!result.length) {
     throwAppError(
@@ -59,7 +59,7 @@ const getAllPersonalProjectsFromDB = async () => {
   return result;
 };
 
-export const PersonalProjectService = {
-  createPersonalProjectIntoDB,
-  getAllPersonalProjectsFromDB,
+export const ProjectService = {
+  createProjectIntoDB,
+  getAllProjectsFromDB,
 };
