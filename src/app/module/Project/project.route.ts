@@ -19,4 +19,4 @@ router.post(
 
 router.get('/', ProjectController.getAllProjects);
 
-export const PersonalProjectRoutes = router;
+export const ProjectRoutes = router;
