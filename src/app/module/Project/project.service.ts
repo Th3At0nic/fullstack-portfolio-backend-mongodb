@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import throwAppError from '../../utils/throwAppError';
-import { TPersonalProject } from './personalProject.interface';
-import { PersonalProjectModel } from './personalProject.model';
+import { TPersonalProject } from './project.interface';
+import { PersonalProjectModel } from './project.model';
 import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
 
 const createPersonalProjectIntoDB = async (
