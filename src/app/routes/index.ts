@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { ExperienceRoutes } from '../module/Experience/experience.route';
-import { PersonalProjectRoutes } from '../module/Personal Project/personalProject.route';
+import { PersonalProjectRoutes } from '../module/Project/project.route';
 import { BlogRoutes } from '../module/Blog/blog.route';
 import { SkillRoutes } from '../module/Skill/skill.route';
 import { ResumeRoutes } from '../module/Resume/resume.route';

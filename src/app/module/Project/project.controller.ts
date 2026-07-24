@@ -3,7 +3,7 @@
 import { StatusCodes } from 'http-status-codes';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
-import { PersonalProjectService } from './personalProject.service';
+import { PersonalProjectService } from './project.service';
 
 const createPersonalProject = catchAsync(async (req, res, next) => {
   const file = req?.file as Express.Multer.File;

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { validateRequest } from '../../middlewares/validateRequest';
-import { personalProjectValidationSchema } from './personalProject.validation';
-import { PersonalProjectController } from './personalProject.controller';
+import { personalProjectValidationSchema } from './project.validation';
+import { PersonalProjectController } from './project.controller';
 import { upload } from '../../utils/sendImageToCloudinary';
 
 const router = Router();
