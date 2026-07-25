@@ -46,7 +46,7 @@ const createProjectIntoDB = async (
 };
 
 const getAllProjectsFromDB = async () => {
-  const result = await ProjectModel.find();
+  const result = await ProjectModel.find().sort({ createdAt: -1 });
 
   if (!result.length) {
     throwAppError(
