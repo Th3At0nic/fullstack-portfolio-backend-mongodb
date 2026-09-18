@@ -72,7 +72,7 @@ cloudinary.config({
 const storage = multer.memoryStorage();
 export const upload = multer({
   storage,
-  limits: { fileSize: 1 * 1024 * 1024 },
+  limits: { fileSize: 2 * 1024 * 1024 },
 });
 
 // Function to upload a buffer to Cloudinary
